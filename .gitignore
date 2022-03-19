@@ -1,0 +1,38 @@
+# Eclipse
+
+.project
+
+.classpath
+
+.settings/
+
+
+
+
+.settings
+
+
+
+# Maven
+
+target/
+
+
+
+#Gradle
+
+.gradle
+
+
+
+# TestNG
+
+test-output/
+
+
+
+
+*.log
+
+#linux te files
+*~
