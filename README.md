@@ -10,7 +10,9 @@ A simple example of creating custom User Federation module for keycloak. Tested 
 
 
 ## Build
-Use mvn package to build the module into jar file
+- Edit the "keycloak.version" properties to the keycloak version you are using. In this example we use version 11.0.2
+- Use mvn package to build the module into jar file
+
 > mvn package
 
 ## Installation into KeyCloak
@@ -24,7 +26,7 @@ Use mvn package to build the module into jar file
 - Configure these mandatory settings:
 	- Database JNDI name: The JNDI name of the datasource you want to use (example: java:jboss/datasources/UserDS)
 	- Query to Get Password by Email: The query used to get password from the table. Only one column permitted(example:
-select password from wp_users where email=?)
+	select password from wp_users where email=?)
 	- Query to Get User Data: Query to get the user data to be imported to keycloak. Only two columns permitted and the name have to be email and firstName (example:select  email,nama as firstName from wp_users where email=?)
 	- Klik save
 	- We are done, you can try to login in the realm's client with username/password from existing DB  
