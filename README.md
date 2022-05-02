@@ -31,3 +31,9 @@ A simple example of creating custom User Federation module for keycloak. Tested 
 	- Klik save
 	- We are done, you can try to login in the realm's client with username/password from existing DB  
 
+## Blog
+You can freely posted any qeustions about this repository on [this medium blog](https://mrizkysatrio.medium.com/keycloak-integration-with-existing-database-587c119db3ae).
+
+
+## Feedback
+For feedback, please raise issues in the issue section of the repository. Periodically, I will update the code. Enjoy!!.
