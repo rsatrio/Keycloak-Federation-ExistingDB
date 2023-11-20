@@ -104,15 +104,15 @@ public class FederationDBTest {
 
 		UserProvider uProv=Mockito.mock(UserProvider.class);
 		Mockito.when(session.userLocalStorage()).thenReturn(uProv);
-		Mockito.when(uProv.getUserByEmail(Mockito.anyString(), Mockito.any())).thenReturn(null);
+		Mockito.when(uProv.getUserByEmail(Mockito.any(), Mockito.anyString())).thenReturn(null);
 		Mockito.when(uProv.addUser(Mockito.any(), Mockito.anyString())).thenReturn(userData);
 
-		UserModel return1=fdbProvider.getUserByEmail(emailValue, rModel);
+		UserModel return1=fdbProvider.getUserByEmail(rModel, emailValue);
 		
 		Assert.assertThat(return1.getEmail(), CoreMatchers.is(emailValue));
 		
 		Mockito.when(rs.next()).thenReturn(false);
-		UserModel return2=fdbProvider.getUserByEmail(emailValueFalse, rModel);
+		UserModel return2=fdbProvider.getUserByEmail(rModel, emailValueFalse);
 		
 		Assert.assertThat(return2, CoreMatchers.is(IsNull.nullValue()));
 
