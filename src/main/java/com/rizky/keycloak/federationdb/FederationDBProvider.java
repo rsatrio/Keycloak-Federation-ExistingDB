@@ -163,14 +163,14 @@ UserLookupProvider
     }
 
     @Override
-    public UserModel getUserByEmail(String arg0, RealmModel arg1) {
+    public UserModel getUserByEmail(RealmModel realm, String email) {
         // TODO Auto-generated method stub
 
         Connection conn1=null;
         PreparedStatement prep=null;
 
         try	{
-            log1.debug("Get User By Email: "+arg0);
+            log1.debug("Get User By Email: "+email);
 
             String dataSource1=model.getConfig().getFirst("Jndi_Name");
             String query1=model.getConfig().getFirst("User_query");
@@ -180,25 +180,25 @@ UserLookupProvider
 
             conn1=ds.getConnection();
             prep=conn1.prepareStatement(query1);
-            prep.setString(1, arg0);
+            prep.setString(1, email);
 
             ResultSet rs=prep.executeQuery();
 
             if(!rs.next())	{
 
-                log1.info("Email: "+arg0+" not found");
+                log1.info("Email: "+email+" not found");
                 return null;
             }
 
-            UserData userData=new UserData(session, arg1, model);
+            UserData userData=new UserData(session, realm, model);
             userData.setEmail(rs.getString("email"));
             userData.setUsername(rs.getString("email"));
             userData.setFirstName(rs.getString("firstName"));
 
-            UserModel local = session.userLocalStorage().getUserByEmail(arg0, arg1);
+            UserModel local = session.userLocalStorage().getUserByEmail(realm, email);
             if(local==null)	{
                 log1.debug("Local User Not Found, adding user to Local");
-                local = session.userLocalStorage().addUser(arg1, userData.getUsername());
+                local = session.userLocalStorage().addUser(realm, userData.getUsername());
                 local.setFederationLink(model.getId());
                 local.setEmail(userData.getEmail());
                 local.setUsername(userData.getEmail());
@@ -225,7 +225,7 @@ UserLookupProvider
             }
         }
         catch(Exception e)	{
-            log1.error("Error getting user with email: "+arg0,e);
+            log1.error("Error getting user with email: "+email,e);
             return null;
         }
         finally {
@@ -245,15 +245,15 @@ UserLookupProvider
     }
 
     @Override
-    public UserModel getUserById(String arg0, RealmModel arg1) {
+    public UserModel getUserById(RealmModel realm, String id) {
         // TODO Auto-generated method stub
-        return getUserByEmail(arg0, arg1);
+        return getUserByEmail(realm, id);
     }
 
     @Override
-    public UserModel getUserByUsername(String arg0, RealmModel arg1) {
+    public UserModel getUserByUsername(RealmModel realm, String username) {
         // TODO Auto-generated method stub
-        return getUserByEmail(arg0, arg1);
+        return getUserByEmail(realm, username);
     }
 
 
