@@ -88,15 +88,10 @@ public class FederationDBTest {
 		
 
 		Connection connect=Mockito.mock(Connection.class);
-		Mockito.when(cModel.getConfig()).thenReturn(config);
-		Mockito.when(config.getFirst(Mockito.anyString())).thenReturn("");
-		Mockito.when(initCtx.lookup(Mockito.anyString())).thenReturn(ds);
-		Mockito.when(ds.getConnection()).thenReturn(connect);
 		PreparedStatement ps=Mockito.mock(PreparedStatement.class);
-		Mockito.when(connect.prepareStatement(Mockito.anyString())).thenReturn(ps);
 
 		ResultSet rs=Mockito.mock(ResultSet.class);
-		Mockito.when(ps.executeQuery()).thenReturn(rs);
+		setupConnectionPrepareStatementAndLookupAndGetConnectionAnd3MoreStubs(initCtx, ds, connect, ps, rs);
 
 		Mockito.when(rs.next()).thenReturn(true);
 		Mockito.when(rs.getString("email")).thenReturn(emailValue);
@@ -133,15 +128,10 @@ public class FederationDBTest {
 		
 
 		Connection connect=Mockito.mock(Connection.class);
-		Mockito.when(cModel.getConfig()).thenReturn(config);
-		Mockito.when(config.getFirst(Mockito.anyString())).thenReturn("");
-		Mockito.when(initCtx.lookup(Mockito.anyString())).thenReturn(ds);
-		Mockito.when(ds.getConnection()).thenReturn(connect);
 		PreparedStatement ps=Mockito.mock(PreparedStatement.class);
-		Mockito.when(connect.prepareStatement(Mockito.anyString())).thenReturn(ps);
 
 		ResultSet rs=Mockito.mock(ResultSet.class);
-		Mockito.when(ps.executeQuery()).thenReturn(rs);
+		setupConnectionPrepareStatementAndLookupAndGetConnectionAnd3MoreStubs(initCtx, ds, connect, ps, rs);
 
 		Mockito.when(rs.getString("password")).thenReturn(passwordValue);
 		CredentialInput input1=Mockito.mock(CredentialInput.class);
@@ -158,7 +148,12 @@ public class FederationDBTest {
 
 	}
 
-
-
-
+	private void setupConnectionPrepareStatementAndLookupAndGetConnectionAnd3MoreStubs(InitialContext initCtx, DataSource ds, Connection connect, PreparedStatement ps, ResultSet rs) throws Exception {
+		Mockito.when(cModel.getConfig()).thenReturn(config);
+		Mockito.when(config.getFirst(Mockito.anyString())).thenReturn("");
+		Mockito.when(initCtx.lookup(Mockito.anyString())).thenReturn(ds);
+		Mockito.when(ds.getConnection()).thenReturn(connect);
+		Mockito.when(connect.prepareStatement(Mockito.anyString())).thenReturn(ps);
+		Mockito.when(ps.executeQuery()).thenReturn(rs);
+	}
 }
